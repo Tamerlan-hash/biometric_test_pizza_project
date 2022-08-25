@@ -1,4 +1,4 @@
-name: Django CI
+name: Pytest
 
 on:
   workflow_dispatch:
@@ -21,4 +21,4 @@ jobs:
       run: docker-compose -f test-docker-compose.yml up -d
 
     - name: Run tests
-      run: docker exec -it pizza pytest
+      run: docker exec -i pizza pytest
