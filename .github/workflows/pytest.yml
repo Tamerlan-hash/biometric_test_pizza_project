@@ -39,9 +39,6 @@ jobs:
       with:
         python-version: 3.10.6
 
-    # install packages via poetry and cache result so future CI runs are fast
-    # the result is only cached if the build is successful
-    # https://stackoverflow.com/questions/62977821/how-to-cache-poetry-install-for-github-actions
     - name: Install poetry
       uses: snok/install-poetry@v1.2.0
       with:
@@ -65,8 +62,6 @@ jobs:
 
     - name: Code Formatting
       run: |
-        # it's unclear to me if `set` is required to ensure errors propagate, or if that's by default in some way
-        # the examples I found did not consistently set these options or indicate that it wasn't required
         set -eax
         source .venv/bin/activate
         black --version
@@ -83,10 +78,6 @@ jobs:
         source .venv/bin/activate
         pyright .
 
-    - name: Run DB migrations
-      run: |
-        source .venv/bin/activate
-        python manage.py migrate
     - name: Run Tests
       run: |
         source .venv/bin/activate
