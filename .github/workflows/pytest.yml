@@ -22,4 +22,7 @@ jobs:
 
     - name: Run tests
       run: |
-        docker-compose exec -T pizza pytest
+        docker-compose exec -T pizza pytest --cov-report term-missing --cov=. tests/
+
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v1
