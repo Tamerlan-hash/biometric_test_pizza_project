@@ -37,7 +37,7 @@ jobs:
     - uses: actions/checkout@v2
     - uses: actions/setup-python@v2
       with:
-        python-version: 3.9.6
+        python-version: 3.10
 
     # install packages via poetry and cache result so future CI runs are fast
     # the result is only cached if the build is successful
