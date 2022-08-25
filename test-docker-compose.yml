@@ -1,0 +1,53 @@
+version: "3.7"
+
+services:
+  test_pizza_db:
+    container_name: test_pizza_db
+    image: postgres:14.2-alpine
+    restart: always
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql_test_pizza/data/
+    environment:
+      - POSTGRES_HOST=test_pizza_db
+      - POSTGRES_PORT=5433
+      - POSTGRES_DB=test_pizza_db
+      - POSTGRES_USER=test_pizza_user
+      - POSTGRES_PASSWORD=7L357Ugyfds231
+    networks:
+      - pizza_net
+
+  pizza:
+    container_name: pizza
+    build: .
+    restart: always
+    environment:
+      - DB_ENGINE=postgresql+asyncpg
+      - POSTGRES_HOST=test_pizza_db
+      - POSTGRES_PORT=5433
+      - POSTGRES_DB=test_pizza_db
+      - POSTGRES_USER=test_pizza_user
+      - POSTGRES_PASSWORD=7L357Ugyfds231
+      - ENV=test
+    ports:
+      - "8000:8000"
+    depends_on:
+      - pizza_db
+    volumes:
+      - migration_volume:/pizza/migrations/versions
+    networks:
+      - pizza_net
+
+
+volumes:
+  postgres_data:
+    name: pizza_postgres_volume
+  migration_volume:
+    name: pizza_migration_volume
+
+
+networks:
+  pizza_net:
+    driver: bridge
+    name: pizza_net
