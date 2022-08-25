@@ -1,0 +1,42 @@
+{
+ "initial_data": {
+   "restaurant": {
+     "id": 1,
+     "name": "TheLastManStands",
+     "address": "mage"
+   }
+ },
+ "case_create": {
+   "payload": {
+     "name": "TheLastManStands",
+     "address": "mage"
+   },
+   "want": {
+     "name": "TheLastManStands",
+     "address": "mage"
+   }
+ },
+ "case_get": {
+   "want": {
+     "id": 1,
+     "name": "TheLastManStands",
+     "address": "mage"
+   }
+ },
+ "case_patch": {
+   "payload": {
+     "name": "TheLastManStands!",
+     "address": "warrior"
+   },
+   "want": {
+     "name": "TheLastManStands!",
+     "address": "warrior"
+   }
+ },
+ "case_delete": {
+   "want": {
+     "status": 200,
+     "message": {"detail": "RestaurantDeleted"}
+   }
+ }
+}

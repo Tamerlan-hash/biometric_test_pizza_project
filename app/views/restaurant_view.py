@@ -4,11 +4,30 @@ from fastapi.responses import JSONResponse
 from modules.pagination import Page, paginate
 from modules.dal import DAL, get_dal
 
-from app.schemas import RestaurantOut, RestaurantUpdate
+from app.schemas import RestaurantOut, RestaurantUpdate, RestaurantCreate
 from app.models import Restaurant
 from app.validator import check_restaurant_exists
 
 restaurant_router = APIRouter(tags=["Restaurant"])
+
+
+@restaurant_router.post(
+    "/restaurants",
+    status_code=201,
+    response_model=RestaurantOut
+)
+async def create_restaurants(
+    request: RestaurantCreate,
+    dal: DAL = Depends(get_dal)
+):
+    restaurant = await dal.create(
+        model=Restaurant,
+        data=request.dict()
+    )
+    return await dal.get(
+        model=Restaurant,
+        filters=[Restaurant.id == restaurant.id]
+    )
 
 
 @restaurant_router.get(
@@ -77,5 +96,5 @@ async def delete_restaurant(
     )
     return JSONResponse(
         status_code=200,
-        content={"RestaurantDeleted"}
+        content={"detail": "RestaurantDeleted"}
     )

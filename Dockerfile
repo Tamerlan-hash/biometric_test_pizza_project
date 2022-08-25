@@ -10,7 +10,7 @@ WORKDIR /pizza
 
 COPY ./requirements.txt /pizza/requirements.txt
 
-RUN apk add gcc libffi-dev libc-dev musl-dev make
+RUN apk add build-base
 
 RUN pip install --upgrade -r /pizza/requirements.txt
 

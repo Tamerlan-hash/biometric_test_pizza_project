@@ -22,6 +22,7 @@ class PizzaUpdate(BaseModel):
 
 
 class PizzaOut(BaseModel):
+    id: int
     name: str
     thickness: Thickness
     secret_ingredient: str | None

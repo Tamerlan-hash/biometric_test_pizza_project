@@ -1,6 +1,6 @@
 from sqlalchemy import Column, BigInteger, String, ForeignKey, Boolean, Enum
 
-from settings.database import Base
+from settings.database.connection import Base
 
 from .enums import Thickness
 

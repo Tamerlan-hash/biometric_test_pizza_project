@@ -3,10 +3,10 @@ from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.openapi.docs import get_redoc_html, get_swagger_ui_html
 from fastapi.responses import JSONResponse
-from fastapi.testclient import TestClient
 from fastapi_pagination import add_pagination
 
-from settings.database import Base, async_engine
+from settings.database import async_engine
+from settings.database.connection import Base
 
 from app.views import pizza_router, restaurant_router
 
@@ -27,8 +27,6 @@ app.add_middleware(
 app.include_router(pizza_router)
 app.include_router(restaurant_router)
 add_pagination(app)
-
-test_client = TestClient(app)
 
 
 @app.get("/redoc", include_in_schema=False)
