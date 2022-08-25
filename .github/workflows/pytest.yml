@@ -17,8 +17,8 @@ jobs:
       with:
         python-version: 3.10.6
 
+    - name: Run containers
+      run: docker-compose -f test-docker-compose.yml up -d
+
     - name: Run tests
-      run: |
-        docker-compose -f test-docker-compose.yml up --build
-        docker ps
-        docker exec -it pizza pytest
+      run: docker-compose exec pizza pytest
