@@ -1,4 +1,4 @@
-name: Pytest
+name: Pytest Coverage
 
 on:
   workflow_dispatch:
@@ -8,7 +8,7 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
+  pytest:
     runs-on: ubuntu-latest
 
     steps:
@@ -22,7 +22,8 @@ jobs:
 
     - name: Run tests
       run: |
-        docker-compose exec -T pizza pytest --cov-report term-missing --cov=. tests/
+        docker-compose exec -T pizza pytest --cov-report=xml --cov=. tests/
+        docker cp pizza:/pizza/coverage.xml .
 
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v3
