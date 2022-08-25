@@ -21,4 +21,4 @@ jobs:
       run: docker-compose -f test-docker-compose.yml up -d
 
     - name: Run tests
-      run: docker run -i pizza pytest
+      run: docker exec -t pizza pytest
