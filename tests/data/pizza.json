@@ -1,0 +1,87 @@
+{
+ "initial_data": {
+   "pizza": {
+     "id": 1,
+     "restaurant_id": 1,
+     "name": "Margherita",
+     "cheese": "PARMEZAN",
+     "thickness": "THIN",
+     "secret_ingredient": "экстракт грейпфрутовых косточек"
+   },
+   "additional_pizza": {
+     "id": 2,
+     "restaurant_id": 1,
+     "name": "Peperoni",
+     "cheese": "MOZZARELLA",
+     "thickness": "MEDIUM",
+     "secret_ingredient": "экстракт манго"
+   }
+ },
+ "case_create": {
+   "payload": {
+     "name": "Margherita",
+     "cheese": "PARMEZAN",
+     "thickness": "THIN",
+     "secret_ingredient": "экстракт грейпфрутовых косточек"
+   },
+   "want": {
+     "restaurant_id": 1,
+     "name": "Margherita",
+     "cheese": "PARMEZAN",
+     "thickness": "THIN",
+     "secret_ingredient": "экстракт грейпфрутовых косточек"
+   }
+ },
+ "case_get": {
+   "want": {
+     "id": 1,
+     "restaurant_id": 1,
+     "name": "Margherita",
+     "cheese": "PARMEZAN",
+     "thickness": "THIN",
+     "secret_ingredient": "экстракт грейпфрутовых косточек"
+   }
+ },
+ "case_get_pagination": {
+   "want": [
+     {
+       "id": 1,
+       "restaurant_id": 1,
+       "name": "Margherita",
+       "cheese": "PARMEZAN",
+       "thickness": "THIN",
+       "secret_ingredient": "экстракт грейпфрутовых косточек"
+     },
+     {
+       "id": 2,
+       "restaurant_id": 1,
+       "name": "Peperoni",
+       "cheese": "MOZZARELLA",
+       "thickness": "MEDIUM",
+       "secret_ingredient": "экстракт манго"
+     }
+   ]
+ },
+ "case_patch": {
+   "payload": {
+     "restaurant_id": 1,
+     "name": "Margherita!",
+     "cheese": "PARMEZAN",
+     "thickness": "THIN",
+     "secret_ingredient": "экстракт грейпфрутовых косточек"
+   },
+   "want": {
+     "restaurant_id": 1,
+     "name": "Margherita!",
+     "cheese": "PARMEZAN",
+     "thickness": "THIN",
+     "secret_ingredient": "экстракт грейпфрутовых косточек"
+   }
+ },
+ "case_delete": {
+   "want": {
+     "status_code": 200,
+     "message": {"detail": "RestaurantPizzaDeleted"}
+   }
+ }
+}

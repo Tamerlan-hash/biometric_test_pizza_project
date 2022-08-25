@@ -12,9 +12,11 @@ from sqlalchemy.orm import sessionmaker
 from settings.database import async_engine
 from settings.database.connection import Base
 
+from main import app
+
 
 @pytest_asyncio.fixture
-async def async_client(test_app: FastAPI) -> AsyncClient:
+async def async_client(test_app: FastAPI = app) -> AsyncClient:
     async with LifespanManager(test_app):
         async with AsyncClient(
             app=test_app,
@@ -26,15 +28,15 @@ async def async_client(test_app: FastAPI) -> AsyncClient:
 
 @pytest_asyncio.fixture(scope="function")
 async def async_session():
-    session = sessionmaker(
+    async_session_maker = sessionmaker(
         async_engine, class_=AsyncSession, expire_on_commit=False
     )
 
-    async with session() as s:
+    async with async_session_maker() as session:
         async with async_engine.begin() as conn:
             await conn.run_sync(Base.metadata.create_all)
 
-        yield s
+        yield session
 
     async with async_engine.begin() as conn:
         await conn.run_sync(Base.metadata.drop_all)
@@ -49,6 +51,20 @@ def test_restaurant_data() -> dict:
 
     if not os.path.exists(path):
         path = os.path.join("data", "restaurant.json")
+
+    with open(path, "r") as file:
+        data = json.loads(file.read())
+
+    return data
+
+
+@pytest.fixture(scope="function")
+def test_pizza_data() -> dict:
+    path = os.getenv('PYTEST_CURRENT_TEST')
+    path = os.path.join(*os.path.split(path)[:-1], "data", "pizza.json")
+
+    if not os.path.exists(path):
+        path = os.path.join("data", "pizza.json")
 
     with open(path, "r") as file:
         data = json.loads(file.read())

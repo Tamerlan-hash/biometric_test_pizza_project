@@ -34,6 +34,34 @@ async def test_create_restaurant(
 
 
 @pytest.mark.asyncio
+async def test_get_restaurants_in_pagination(
+    async_client: AsyncClient,
+    async_session: AsyncSession,
+    test_restaurant_data: dict
+):
+    data = test_restaurant_data["initial_data"]["restaurant"]
+    statement = insert(Restaurant).values(data)
+    await async_session.execute(statement=statement)
+    await async_session.commit()
+
+    data = test_restaurant_data["initial_data"]["additional_restaurant"]
+    statement = insert(Restaurant).values(data)
+    await async_session.execute(statement=statement)
+    await async_session.commit()
+
+    response = await async_client.get(
+        "/restaurants",
+        params={"page": 1, "size": 50}
+    )
+    assert response.status_code == 200
+
+    got = response.json()['data']
+    want = test_restaurant_data["case_get_pagination"]["want"]
+
+    assert got == want
+
+
+@pytest.mark.asyncio
 async def test_get_restaurant_detail(
     async_client: AsyncClient,
     async_session: AsyncSession,
@@ -96,8 +124,7 @@ async def test_delete_restaurant(
     got = response.json()
     want = test_restaurant_data["case_delete"]["want"]
 
-    for key, value in want.items():
-        assert got[key] == value
+    assert got == want["message"]
 
     statement = select(
         Restaurant

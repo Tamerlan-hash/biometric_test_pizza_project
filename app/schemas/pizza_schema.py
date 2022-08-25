@@ -1,10 +1,11 @@
 from pydantic import BaseModel
 
-from app.enums import Thickness
+from app.enums import Thickness, Cheese
 
 
 class PizzaCreate(BaseModel):
     name: str
+    cheese: Cheese
     thickness: Thickness
     secret_ingredient: str | None
 
@@ -13,8 +14,10 @@ class PizzaCreate(BaseModel):
 
 
 class PizzaUpdate(BaseModel):
+    restaurant_id: int | None
     name: str | None
-    thickness: Thickness
+    cheese: Cheese | None
+    thickness: Thickness | None
     secret_ingredient: str | None
 
     class Config:
@@ -23,7 +26,9 @@ class PizzaUpdate(BaseModel):
 
 class PizzaOut(BaseModel):
     id: int
+    restaurant_id: int
     name: str
+    cheese: Cheese
     thickness: Thickness
     secret_ingredient: str | None
 
