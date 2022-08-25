@@ -55,29 +55,6 @@ jobs:
       run: poetry install
       if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
 
-#    - name: Linting
-#      run: |
-#        source .venv/bin/activate
-#        pylint **/*.py
-#
-#    - name: Code Formatting
-#      run: |
-#        set -eax
-#        source .venv/bin/activate
-#        black --version
-#        black --check .
-#        isort **/*.py -c -v
-
-    - name: Setup node.js (for pyright)
-      uses: actions/setup-node@v2.4.0
-      with:
-        node-version: "12"
-    - name: Run type checking
-      run: |
-        npm install -g pyright
-        source .venv/bin/activate
-        pyright .
-
     - name: Run Tests
       run: |
         source .venv/bin/activate
