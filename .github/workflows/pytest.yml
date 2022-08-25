@@ -22,5 +22,4 @@ jobs:
 
     - name: Run tests
       run: |
-        docker exec -t pizza sh
-        pytest
+        docker-compose exec pizza pytest
