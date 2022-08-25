@@ -33,7 +33,7 @@ services:
     ports:
       - "8000:8000"
     depends_on:
-      - pizza_db
+      - test_pizza_db
     volumes:
       - migration_volume:/pizza/migrations/versions
     networks:
